@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { UsuarioModel } from '../modelos/usuario.model';
+import { RutaModel } from '../modelos/ruta.model';
 import { SeguridadService } from './seguridad.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class UsuarioService {
+export class RutaService {
 
   url = "http://localhost:3000"
   token: string = ''
@@ -17,18 +17,16 @@ export class UsuarioService {
       this.token = this.seguridadService.getToken();      
     }
 
-    store(usuario: UsuarioModel): Observable<UsuarioModel> {
-      return this.http.post<UsuarioModel>(`${this.url}/usuarios`, {
-        nombre: usuario.nombre,
-        apellidos: usuario.apellidos,
-        telefono: usuario.telefono,
-        correo: usuario.correo,
-        password: ''
+    store(ruta: RutaModel): Observable<RutaModel> {
+      return this.http.post<RutaModel>(`${this.url}/rutas`, {
+        origen: ruta.origen,
+        destino: ruta.destino,
+        tiempo_estimado: ruta.tiempo_estimado
       });
     }
 
-    getAll(): Observable<UsuarioModel[]>{
-      return this.http.get<UsuarioModel[]>(`${this.url}/usuarios`, {
+    getAll(): Observable<RutaModel[]>{
+      return this.http.get<RutaModel[]>(`${this.url}/rutas`, {
         // Le paso el token a la solicitud
         headers: new HttpHeaders({
           "Authorization": `Bearer ${this.token}`
@@ -36,12 +34,11 @@ export class UsuarioService {
       })
     }
 
-    update(usuario: UsuarioModel): Observable<UsuarioModel> {
-      return this.http.patch<UsuarioModel>(`${this.url}/usuarios/${usuario.id}`, {
-        nombre: usuario.nombre,
-        apellidos: usuario.apellidos,
-        telefono: usuario.telefono,
-        correo: usuario.correo
+    update(ruta: RutaModel): Observable<RutaModel> {
+      return this.http.patch<RutaModel>(`${this.url}/rutas/${ruta.id}`, {
+        origen: ruta.origen,
+        destino: ruta.destino,
+        tiempo_estimado: ruta.tiempo_estimado
       }, {
         // Le paso el token a la solicitud
         headers: new HttpHeaders({
@@ -50,24 +47,24 @@ export class UsuarioService {
       });
     }
 
-    delete(id: string): Observable<UsuarioModel[]>{
-      return this.http.delete<UsuarioModel[]>(`${this.url}/usuarios/${id}`, {
+    delete(id: string): Observable<RutaModel[]>{
+      return this.http.delete<RutaModel[]>(`${this.url}/rutas/${id}`, {
         headers: new HttpHeaders({
           "Authorization": `Bearer ${this.token}`
         })
       })
     }
 
-    getWithId(id: string): Observable<UsuarioModel>{
-      return this.http.get<UsuarioModel>(`${this.url}/usuarios/${id}`,{
+    getWithId(id: string): Observable<RutaModel>{
+      return this.http.get<RutaModel>(`${this.url}/rutas/${id}`,{
         headers: new HttpHeaders({
           "Authorization": `Bearer ${this.token}`
         })
       })
     }    
 
-    getCount(): Observable<UsuarioModel[]>{
-      return this.http.get<UsuarioModel[]>(`${this.url}/usuarios/count`, {
+    getCount(): Observable<RutaModel[]>{
+      return this.http.get<RutaModel[]>(`${this.url}/rutas/count`, {
         // Le paso el token a la solicitud
         headers: new HttpHeaders({
           "Authorization": `Bearer ${this.token}`
@@ -76,3 +73,4 @@ export class UsuarioService {
     }
 
 }
+

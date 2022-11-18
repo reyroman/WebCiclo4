@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 import { UsuarioModel } from 'src/app/modelos/usuario.model';
 import { SeguridadService } from 'src/app/servicios/seguridad.service';
 
+
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
